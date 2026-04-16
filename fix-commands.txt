@@ -1,0 +1,62 @@
+=== 在宝塔终端中逐行执行以下命令 ===
+
+cd /www/wwwroot/renliyesheng
+
+# 1. 停止现有服务
+pm2 delete all
+
+# 2. 确认 .env 文件中的飞书配置
+cat .env | grep FEISHU
+
+# 3. 重新编译（确保代码使用最新的 dotenv 路径）
+npx tsc --project tsconfig.json --outDir dist-server
+
+# 4. 关键步骤：导出环境变量后启动
+# 方法 A: 使用 export 然后 pm2 start
+export $(grep -v '^#' .env | xargs)
+export NODE_ENV=production
+echo "FEISHU_DEFAULT_DEPT_ID=$FEISHU_DEFAULT_DEPT_ID"
+pm2 start dist-server/server.js --name renliyesheng
+
+# 5. 保存配置
+pm2 save
+
+# 6. 等待并测试
+sleep 3
+curl -s "http://127.0.0.1:3800/api/feishu-members-by-dept" | head -c 500
+
+=== 如果上述方法不行，尝试方法 B ===
+
+# 方法 B: 使用 PM2 的 --env 参数
+cd /www/wwwroot/renliyesheng
+pm2 delete all
+
+# 创建 ecosystem 配置文件
+cat > ecosystem.config.cjs << 'ECOEOF'
+module.exports = {
+  apps: [{
+    name: 'renliyesheng',
+    script: './dist-server/server.js',
+    cwd: '/www/wwwroot/renliyesheng',
+    instances: 1,
+    exec_mode: 'fork',
+    env: {
+      NODE_ENV: 'production',
+      FEISHU_APP_ID: 'cli_a9f5acb427385cd6',
+      FEISHU_APP_SECRET: 'YqLyo4YJ7w3MM5X1dE36Ne2f63ht4aZZ',
+      FEISHU_DEFAULT_DEPT_ID: 'od-1a259f69e1c39315d91bf7615db8f4f9'
+    }
+  }]
+};
+ECOEOF
+
+# 使用 ecosystem 启动
+pm2 start ecosystem.config.cjs
+pm2 save
+
+# 测试
+sleep 3
+curl -s "http://127.0.0.1:3800/api/feishu-members-by-dept" | head -c 500
+
+=== 检查日志 ===
+pm2 logs renliyesheng --lines 50

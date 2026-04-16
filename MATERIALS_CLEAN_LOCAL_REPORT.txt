@@ -1,0 +1,47 @@
+本地清洗与检查摘要（自动生成说明）
+=====================================
+
+数据来源
+  - materials_raw.csv（项目根目录，164 行）
+
+重复码检查
+  - 本导出中 code 去空格后 164 个全部唯一，未发现「同码多行」。
+  - 若历史上曾出现重码，可能已在导出前合并或本表为清洗后快照。
+  - 因历史编码体系混乱（如五金标成 CE11），已使用全表重算模式而非仅修重码。
+
+已执行命令（等价）
+  - cd scripts/material_code_dedupe
+  - python clean_material_codes.py ..\..\materials_raw.csv
+      -o ..\..\materials_cleaned.csv
+      -m ..\..\code_mapping.csv
+      --mode all-rows
+      --pic-dir "C:\Users\Admin\Desktop\material\new\PIC"
+      --shell-commands ..\..\rename_pic_local.sh
+
+生成文件（项目根目录）
+  - materials_cleaned.csv
+      新 code + 列 code_before_cleanup（旧码审计）
+  - code_mapping.csv
+      id, old_code, new_code（回库 / 对账用）
+  - code_mapping_canonical_by_old_code.csv
+      旧码 -> 规范新码（rule_items / 单图 PIC 名用）
+  - materials_cleaned_for_import.csv
+      在 cleaned 基础上已刷新 image、image_filename 中的文件名为新码
+      （OSS 路径中文件夹名仍按 category，仅末段文件名替换为新 code）
+  - rename_pic_local.sh
+      在本地 PIC 目录下将 旧码.png 重命名为 新码.png（Git Bash 下执行）
+
+图片目录检查
+  - 指定路径存在：C:\Users\Admin\Desktop\material\new\PIC
+  - 当前该目录下 .png 数量为 0（未检测到可重命名文件）。
+  - 请将实际图片放入该目录后，在 Git Bash 中执行：
+      bash rename_pic_local.sh
+    或先打开脚本确认 PIC= 路径无误。
+
+新码唯一性
+  - 已校验：new_code 共 164 条且互不相同。
+
+后续建议
+  1) 人工抽查 materials_cleaned_for_import.csv 中瓦类 / BOM 规则相关行（CE01、ABETH 等简写是否与《物料明细》一致）。
+  2) 图片就位后执行 rename_pic_local.sh，再把新图同步到 OSS（URL 已与 materials_cleaned_for_import 对齐）。
+  3) 确认无误后，再按 migrations/004_materials_code_migration_runbook.sql 在库内做 FK 解除与 UPDATE（勿长期开启 BOM_RULES_RESEED=1）。

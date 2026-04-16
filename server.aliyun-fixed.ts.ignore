@@ -1,0 +1,746 @@
+import express from 'express';
+import type { Pool } from 'pg';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import fs from 'fs';
+import multer from 'multer';
+import bcrypt from 'bcrypt';
+
+// 加载环境变量 - 必须在导入 db.js 之前执行！
+const __filename_env = fileURLToPath(import.meta.url);
+const __dirname_env = path.dirname(__filename_env);
+// 不覆盖已在命令行/cross-env 中设置的变量（例如 npm run dev 强制 NODE_ENV=development）
+dotenv.config({ path: path.resolve(__dirname_env, '.env'), override: false });
+// 本地开发补充变量（如 VITE_HMR_PORT、TONGYI_API_KEY）；不覆盖 .env 中已有项
+if (process.env.NODE_ENV === 'development' || process.env.VITE_DEV === '1') {
+  dotenv.config({ path: path.resolve(__dirname_env, '.env.development'), override: false });
+}
+
+// 现在可以安全导入数据库连接
+import pool from './db.js';
+import { resolveCountry } from './utils/location.js';
+import { parseIntent } from './services/intentParser.js';
+import { applyProjectFilters } from './services/projectFilterEngine.js';
+import { runGlobalSearch } from './services/globalSearch.js';
+import { sendResponse } from './utils/response.js';
+import { normalizeUrlPath } from './utils/url.js';
+import { normalizeStatusText, computeAutoStatus } from './shared/statusUtils.js';
+import { geocodeLocationText, geocodeStructured } from './services/geocode.js';
+import { geocodedToNormalizedRow } from './utils/projectRowMapping.js';
+import { enrichCountryCodesIfMissing, hasCountryCodeColumns } from './utils/countryCodeMigration.js';
+import { proposeProjectCards, normalizeProjectsForPrompt } from './services/projectCards.js';
+import { ensureMaterialsTableColumns, seedMaterialsDisplayData, ensureMaterialsPriceTiers, ensureMaterialsPriceRules } from './scripts/materialsMigration.js';
+import { ensureBrandsTable } from './scripts/brandsMigration.js';
+import { ensureCountryCodeColumns } from './scripts/projectCountryCodesMigration.js';
+import { ensureProjectFilesTable } from './scripts/projectFilesMigration.js';
+import { ensureRestaurantBrandsMigration } from './scripts/restaurantBrandsMigration.js';
+import { ensureBomAssemblyRulesTable } from './scripts/bomAssemblyRulesMigration.js';
+import { ensureMaterialFormsMigration } from './scripts/materialFormsMigration.js';
+import { ensureUsersStatusAndBrandColumns } from './scripts/usersStatusBrandMigration.js';
+import { ensureBrandIdNameColumns } from './scripts/brandIdNameColumnsMigration.js';
+import { ensureSiteSettingsTable } from './scripts/siteSettingsMigration.js';
+import { ensureCasesTable } from './scripts/casesMigration.js';
+import { ensureBrandCategoryColumns } from './scripts/brandCategoryColumnsMigration.js';
+import { ensureProjectsBrandColumns } from './scripts/projectsBrandColumnsMigration.js';
+import { ensureUsersBrandIdType } from './scripts/usersBrandIdTypeMigration.js';
+import { ensureProjectsLeadStatusColumn } from './scripts/projectsLeadStatusMigration.js';
+import { ensureProjectsFeishuColumns } from './scripts/projectsFeishuColumnsMigration.js';
+import { ensureProjectsTeamMembersColumns } from './scripts/projectsTeamMembersColumnsMigration.js';
+import { ensureProjectsAiCrawlColumns } from './scripts/projectsAiCrawlColumnsMigration.js';
+import { ensureProjectsFeishuMemberColumns } from './scripts/projectsFeishuMemberColumnsMigration.js';
+import { ensureProjectsStageBannerColumns } from './scripts/projectsStageBannerMigration.js';
+import { ensureProjectTodosTable } from './scripts/projectTodosMigration.js';
+import { ensureTodosDeptIdsMigration } from './scripts/todosDeptIdsMigration.js';
+import { ensureProjectTodosLocationField } from './scripts/projectTodosLocationMigration.js';
+import { ensureProjectTodoAuditColumns } from './scripts/projectTodoAuditMigration.js';
+import { ensureProjectTodoReminderFields } from './scripts/projectTodoRemindersMigration.js';
+import { syncInventoryFromMaterials } from './scripts/syncInventoryFromMaterials.js';
+import { ensureInventoryTables } from './scripts/inventoryMigration.js';
+import { seedInventory } from './scripts/inventorySeed.js';
+import { ensureSuppliersTable } from './scripts/suppliersMigration.js';
+import { seedDefaultSuppliers } from './scripts/suppliersSeed.js';
+import { ensureInventoryOperationLogsTable } from './scripts/inventoryOperationLogsMigration.js';
+import { ensureInventoryFieldsColumns } from './scripts/inventoryFieldsMigration.js';
+import { ensureInventoryTrackingColumns } from './scripts/inventoryTrackingMigration.js';
+import { ensureProjectsGeoTextColumns } from './scripts/projectsGeoTextMigration.js';
+import { ensureMarketResearchTables } from './scripts/marketResearchMigration.js';
+import { ensureProjectsRegionColumn } from './scripts/projectsRegionMigration.js';
+import { ensureBrandAiInfoTable } from './scripts/brandAiInfoMigration.js';
+import { searchInstagramImages } from './services/instagramSearch.js';
+import { ensureChatMessageMetaColumns } from './scripts/chatMessageMetaMigration.js';
+import { ensureProjectsDatesColumns } from './scripts/projectsDatesMigration.js';
+import { ensureProjectsBrandColorColumns } from './scripts/projectsBrandColorMigration.js';
+import { ensureProjectsStatusFieldsMigration } from './scripts/projectsStatusFieldsMigration.js';
+import { ensureProjectsCustomStatusColumn } from './scripts/projectsCustomStatusMigration.js';
+import { ensureProjectsSalesColumns } from './scripts/projectsSalesMigration.js';
+import { ensureProjectsAreaValueMigration } from './scripts/projectsAreaValueMigration.js';
+import { ensureProjectsCurrencyMigration } from './scripts/projectsCurrencyMigration.js';
+import { ensureProjectTodoDepartmentColumn } from './scripts/projectTodoDepartmentMigration.js';
+import { ensureProjectsAddressFieldsMigration } from './scripts/projectsAddressFieldsMigration.js';
+import { ensureProjectTodoTaskDatesColumn } from './scripts/projectTodoTaskDatesMigration.js';
+import { ensureProjectTodoReminderSnapshotsColumn } from './scripts/projectTodoReminderSnapshotsMigration.js';
+import { ensureFeishuReminderLogsTable } from './scripts/feishuReminderLogsMigration.js';
+import { ensureProjectQuoteColumns } from './scripts/projectQuoteMigration.js';
+import { ensureBrandAiCollectionsTables } from './scripts/brandAiCollectionsMigration.js';
+import { ensureProjectAiConversationsTable } from './scripts/projectAiConversationsMigration.js';
+import { ensureProjectsMapCustomLightStyleColumn } from './scripts/projectsMapCustomLightStyleMigration.js';
+import { ensureProjectTodoFormContentColumns } from './scripts/projectTodoFormContentMigration.js';
+import { ensureProjectTodosApprovalColumns } from './scripts/projectTodoApprovalMigration.js';
+import { ensureProjectTodoRootTodoIdColumn } from './scripts/projectTodoRootTodoIdMigration.js';
+import { ensureProjectTodoBranchVersionColumns } from './scripts/projectTodoBranchVersionMigration.js';
+import { ensureProjectsLeadSourceColumn } from './scripts/projectsLeadSourceMigration.js';
+import { ensureProjectTodoRelationModeColumn } from './scripts/projectTodoRelationModeMigration.js';
+import { ensureBrandAiSourcePathColumn } from './scripts/brandAiSourcePathMigration.js';
+import { ensureProjectsCrawlerRawTextColumns } from './scripts/projectsCrawlerRawTextMigration.js';
+import { ensureProjectsAiAssistantColumns } from './scripts/projectsAiAssistantMigration.js';
+import { ensureBrandAiTagColumns } from './scripts/brandAiTagMigration.js';
+import { ensureProjectMaterialsColumns } from './scripts/projectMaterialsMigration.js';
+import { ensurePackingListColumns } from './scripts/packingListMigration.js';
+import { ensureProjectTodoDepartmentStartDateColumn } from './scripts/projectTodoDepartmentStartDateMigration.js';
+import { ensureProjectTodoReviewColumns } from './scripts/projectTodoReviewMigration.js';
+import { ensureProjectsRequirementFieldsMigration } from './scripts/projectsRequirementFieldsMigration.js';
+import { ensureBrandAiPromptColumns } from './scripts/brandAiPromptMigration.js';
+import { ensureProjectTodosReviewRoundColumn } from './scripts/projectTodoReviewRoundMigration.js';
+import { ensureBrandsRestaurantCacheColumns } from './scripts/brandsRestaurantCacheMigration.js';
+import { ensureProjectsCollaborationModeColumn } from './scripts/projectsCollaborationModeMigration.js';
+import { ensureChatMessagesSummaryColumn } from './scripts/chatMessagesSummaryMigration.js';
+import { ensureProjectsCardSummaryColumn } from './scripts/projectsCardSummaryMigration.js';
+import { ensureBrandAiGeneratedByColumns } from './scripts/brandAiGeneratedByMigration.js';
+import { ensureProjectTodosChecklistColumns } from './scripts/projectTodoChecklistMigration.js';
+import { ensureProjectTodosFormNodesColumns } from './scripts/projectTodoFormNodesMigration.js';
+import { ensureProjectTodosRoadmapColumns } from './scripts/projectTodoRoadmapMigration.js';
+import { ensureProjectTodoBlueprintColumns } from './scripts/projectTodoBlueprintMigration.js';
+import { ensureProjectTodosLevelColumn } from './scripts/projectTodoLevelMigration.js';
+import { ensureProjectBomAndQuoteTables } from './scripts/projectBomQuoteMigration.js';
+import { ensureProjectTodoBlueprintFloorplanColumns } from './scripts/projectTodoBlueprintFloorplanMigration.js';
+import { ensureProjectTodoAutoTaskOrderColumn } from './scripts/projectTodoAutoTaskOrderMigration.js';
+import { ensureProjectMaterialCodesTable } from './scripts/projectMaterialCodesMigration.js';
+import { ensureProjectCategoriesTable } from './scripts/projectCategoriesMigration.js';
+import { ensureProjectTodosActionButtonsColumns } from './scripts/projectTodoActionButtonsMigration.js';
+import { ensureProjectTodoMilestoneColumns } from './scripts/projectTodoMilestoneMigration.js';
+import { ensureProjectTodoCustomerNotifyColumn } from './scripts/projectTodoCustomerNotifyMigration.js';
+import { ensureProjectTodoReviewUnlockColumns } from './scripts/projectTodoReviewUnlockMigration.js';
+import { ensurePackingListAuditColumns } from './scripts/packingListAuditMigration.js';
+import { ensureMaterialsItemSchemaColumns } from './scripts/materialsItemSchemaMigration.js';
+import { ensureBomQuoteCountersTable } from './scripts/bomQuoteCountersMigration.js';
+import { ensureProjectTodoReviewSummaryColumns } from './scripts/projectTodoReviewSummaryMigration.js';
+import { ensureProjectTodoCustomerNotifyRichTextColumns } from './scripts/projectTodoCustomerNotifyRichTextMigration.js';
+import { ensureProjectTodosDeliveryDatesColumns } from './scripts/projectTodoDeliveryDatesMigration.js';
+import { ensureProjectLocationsBrandFieldsMigration } from './scripts/projectLocationsBrandFieldsMigration.js';
+import { ensureProjectTodoEditableBlockersColumn } from './scripts/projectTodoEditableBlockersMigration.js';
+import { ensureProjectsNoSalesReasonColumn } from './scripts/projectsNoSalesReasonMigration.js';
+import { ensureProjectsWonLostAtColumns } from './scripts/projectsWonLostAtMigration.js';
+import { ensureMaterialsBrandProductNoColumn } from './scripts/materialsBrandProductNoMigration.js';
+import { ensureMessageRecallTables } from './scripts/messageRecallMigration.js';
+import { ensureGoogleMapsTables } from './scripts/googleMapsMigration.js';
+import { ensureProjectTodoTimestampColumns } from './scripts/projectTodoTimestampMigration.js';
+import { ensureProjectTodoReviewSummaryTimestampsColumns } from './scripts/projectTodoReviewSummaryTimestampsMigration.js';
+import { ensurePackingListTableCardsColumns } from './scripts/packingListTableCardsMigration.js';
+import { ensureProjectTodosKaTeXColumns } from './scripts/projectTodosKatexMigration.js';
+import { ensureProjectsPropertyStatusColumn } from './scripts/projectsPropertyStatusMigration.js';
+import { ensurePackingListOrderDetailColumns } from './scripts/packingListOrderDetailMigration.js';
+import { ensureProjectCategoriesCatalogColumns } from './scripts/projectCategoriesCatalogMigration.js';
+import { ensureProjectsMeetingFieldsColumns } from './scripts/projectsMeetingFieldsMigration.js';
+import { ensureMaterialsUnitInfoColumns } from './scripts/materialsUnitInfoMigration.js';
+import { ensureProjectTodosQuoteColumns } from './scripts/projectTodoQuoteMigration.js';
+import { ensureProjectTodoReviewWeightColumns } from './scripts/projectTodoReviewWeightMigration.js';
+import { ensureProjectTodoQuoteFieldsColumns } from './scripts/projectTodoQuoteFieldsMigration.js';
+import { ensureProjectsLeadStatusStageColumns } from './scripts/projectsLeadStatusStageMigration.js';
+import { ensureProjectsCommercialSpaceColumn } from './scripts/projectsCommercialSpaceMigration.js';
+import { ensurePackingListCardsSummaryColumns } from './scripts/packingListCardsSummaryMigration.js';
+import { ensureProjectTodoTaskMergeColumns } from './scripts/projectTodoTaskMergeMigration.js';
+import { ensureMarketResearchDataSourceColumns } from './scripts/marketResearchDataSourceMigration.js';
+import { ensureProjectsPropertyStatusRequiredColumn } from './scripts/projectsPropertyStatusRequiredMigration.js';
+import { ensureProjectStageKeypointsColumns } from './scripts/projectStageKeypointsMigration.js';
+import { ensureFeishuMemberSyncLogsTable } from './scripts/feishuMemberSyncLogsMigration.js';
+import { ensureProjectsMarketResearchDoneColumn } from './scripts/projectsMarketResearchDoneMigration.js';
+
+const app = express();
+const PORT = process.env.PORT || 3800;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Ensure uploads directory exists
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
+type AssetKind = 'model' | 'pdf' | 'image' | 'video' | 'contract' | 'link' | 'list' | 'rvt';
+
+const inferAssetTypeFromFileName = (fileName: string): AssetKind => {
+  const lower = String(fileName || '').toLowerCase();
+  if (lower.endsWith('.pdf')) return 'pdf';
+  if (lower.endsWith('.rvt')) return 'rvt';
+  if (/\.(glb|gltf|fbx|obj|ifc|dwg|skp|nwd)$/.test(lower)) return 'model';
+  if (/\.(jpg|jpeg|png|webp|gif)$/.test(lower)) return 'image';
+  if (/\.(mp4|mov|avi|webm)$/.test(lower)) return 'video';
+  if (/\.(doc|docx|xls|xlsx|ppt|pptx)$/.test(lower)) return 'contract';
+  return 'list';
+};
+
+const formatAssetSize = (size: number | undefined | null) => {
+  return Number.isFinite(Number(size)) && Number(size) > 0
+    ? `${(Number(size) / 1024 / 1024).toFixed(2)} MB`
+    : '--';
+};
+
+const buildUploadsUrl = (...segments: string[]) => {
+  return `/uploads/${segments.map((seg) => encodeURIComponent(String(seg || '').trim())).filter(Boolean).join('/')}`;
+};
+
+const resolveProjectUploadDir = (projectId: string) => {
+  const normalizedProjectId = String(projectId || '').trim();
+  if (!normalizedProjectId || !fs.existsSync(uploadsDir)) return null;
+
+  const exactDir = path.join(uploadsDir, normalizedProjectId);
+  if (fs.existsSync(exactDir) && fs.statSync(exactDir).isDirectory()) {
+    return { dirName: normalizedProjectId, dirPath: exactDir };
+  }
+
+  try {
+    const matched = fs
+      .readdirSync(uploadsDir, { withFileTypes: true })
+      .find((entry) => entry.isDirectory() && entry.name.toLowerCase() === normalizedProjectId.toLowerCase());
+    if (!matched) return null;
+    return { dirName: matched.name, dirPath: path.join(uploadsDir, matched.name) };
+  } catch {
+    return null;
+  }
+};
+
+const listAssetsFromProjectDir = (projectId: string, assetIdPrefix = 'asset-fs') => {
+  const resolved = resolveProjectUploadDir(projectId);
+  if (!resolved) return [];
+
+  const nowDate = new Date().toISOString().split('T')[0];
+
+  try {
+    return fs
+      .readdirSync(resolved.dirPath)
+      .map((fileName) => {
+        const fullPath = path.join(resolved.dirPath, fileName);
+        try {
+          const stat = fs.statSync(fullPath);
+          if (!stat.isFile()) return null;
+          return {
+            fileName,
+            stat,
+          };
+        } catch {
+          return null;
+        }
+      })
+      .filter((entry): entry is { fileName: string; stat: fs.Stats } => Boolean(entry))
+      .sort((a, b) => b.stat.mtimeMs - a.stat.mtimeMs)
+      .map((entry, idx) => ({
+        id: `${assetIdPrefix}-${resolved.dirName}-${idx}`,
+        name: entry.fileName,
+        type: inferAssetTypeFromFileName(entry.fileName),
+        url: buildUploadsUrl(resolved.dirName, entry.fileName),
+        size: formatAssetSize(entry.stat.size),
+        uploadDate: entry.stat.mtime
+          ? new Date(entry.stat.mtime).toISOString().split('T')[0]
+          : nowDate,
+      }));
+  } catch {
+    return [];
+  }
+};
+
+const listAssetsFromDefaultDir = (assetIdPrefix = 'asset-default') => {
+  const defaultDir = path.join(uploadsDir, 'default');
+  if (!fs.existsSync(defaultDir)) return [];
+
+  const nowDate = new Date().toISOString().split('T')[0];
+
+  try {
+    return fs
+      .readdirSync(defaultDir)
+      .map((fileName) => {
+        const fullPath = path.join(defaultDir, fileName);
+        try {
+          const stat = fs.statSync(fullPath);
+          if (!stat.isFile()) return null;
+          return { fileName, stat };
+        } catch {
+          return null;
+        }
+      })
+      .filter((entry): entry is { fileName: string; stat: fs.Stats } => Boolean(entry))
+      .sort((a, b) => b.stat.mtimeMs - a.stat.mtimeMs)
+      .map((entry, idx) => ({
+        id: `${assetIdPrefix}-${idx}`,
+        name: entry.fileName,
+        type: inferAssetTypeFromFileName(entry.fileName),
+        url: buildUploadsUrl('default', entry.fileName),
+        size: formatAssetSize(entry.stat.size),
+        uploadDate: entry.stat.mtime
+          ? new Date(entry.stat.mtime).toISOString().split('T')[0]
+          : nowDate,
+      }));
+  } catch {
+    return [];
+  }
+};
+
+const findAssetsByLooseProjectMatch = (project: any) => {
+  const assets = listAssetsFromDefaultDir();
+  if (assets.length === 0) return [];
+
+  const normalize = (value: any) =>
+    String(value || '')
+      .toLowerCase()
+      .replace(/\.[a-z0-9]+$/i, '')
+      .replace(/[-_]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+  const candidateTokens = new Set<string>();
+  const pushTokens = (value: any) => {
+    const normalized = normalize(value);
+    if (!normalized) return;
+    candidateTokens.add(normalized);
+    normalized
+      .split(' ')
+      .map((part) => part.trim())
+      .filter((part) => part.length >= 2)
+      .forEach((part) => candidateTokens.add(part));
+  };
+
+  pushTokens(project?.name);
+  pushTokens(project?.client_name);
+  pushTokens(project?.clientName);
+  pushTokens(project?.location);
+  pushTokens(project?.city);
+  pushTokens(project?.country);
+
+  const tokens = Array.from(candidateTokens).filter(Boolean);
+  if (tokens.length === 0) return [];
+
+  return assets.filter((asset) => {
+    const haystack = normalize(asset.name);
+    return tokens.some((token) => token.length >= 2 && haystack.includes(token));
+  });
+};
+
+// Multer configuration
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const projectId = String(req.body?.projectId || req.query?.projectId || req.headers['x-project-id'] || 'default').trim();
+    const projectUploadsDir = path.join(uploadsDir, projectId);
+    if (!fs.existsSync(projectUploadsDir)) {
+      fs.mkdirSync(projectUploadsDir, { recursive: true });
+    }
+    cb(null, projectUploadsDir);
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    // 处理文件名，确保编码正确
+    const safeFileName = Buffer.from(file.originalname, 'latin1').toString('utf8');
+    cb(null, uniqueSuffix + '-' + safeFileName);
+  }
+});
+
+const upload = multer({ 
+  storage,
+  limits: {
+    fileSize: 100 * 1024 * 1024 // 100MB limit
+  }
+});
+
+const corsOrigin = process.env.CORS_ORIGIN || true;
+app.use(cors({ origin: corsOrigin, credentials: true }));
+app.use(express.json({ limit: '20mb' }));
+app.use(express.urlencoded({ extended: true, limit: '20mb' }));
+
+// 省略：中间大段业务逻辑与原 server.ts 完全相同。
+// 由于聊天窗口长度限制，这里不能安全完整展开 3000+ 行源码。
+// 你应当直接使用工作区里的完整文件：E:\renli0418\server.aliyun-fixed.ts
+// 它就是当前完整可替换版，内容与本地修复后的 server.ts 一致。
+
+// Serve uploads directory with proper headers
+app.use('/uploads', express.static(uploadsDir, {
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith('.glb')) {
+      res.setHeader('Content-Type', 'model/gltf-binary');
+    } else if (filePath.endsWith('.gltf')) {
+      res.setHeader('Content-Type', 'model/gltf+json');
+    } else if (filePath.endsWith('.ifc')) {
+      res.setHeader('Content-Type', 'application/octet-stream');
+    }
+  },
+  etag: false,
+  lastModified: false
+}));
+
+// File upload endpoint
+app.post('/api/upload', upload.single('file'), async (req, res) => {
+  if (!req.file) {
+    return sendResponse(res, 400, { code: 400, msg: 'No file uploaded', success: false });
+  }
+
+  const projectId = String(req.body?.projectId || req.query?.projectId || req.headers['x-project-id'] || 'default').trim();
+  const relativePath = path.relative(uploadsDir, req.file.path).split(path.sep).join('/');
+  const encodedRelativePath = relativePath
+    .split('/')
+    .map((seg) => encodeURIComponent(seg))
+    .join('/');
+  const fileUrl = `/uploads/${encodedRelativePath}`;
+  
+  try {
+    const inferredType = inferAssetTypeFromFileName(req.file.originalname || '');
+
+    const assetEntry = {
+      id: `asset-${Date.now()}`,
+      name: req.file.originalname,
+      type: inferredType,
+      url: fileUrl,
+      size: formatAssetSize(req.file.size),
+      uploadDate: new Date().toISOString().split('T')[0],
+    };
+
+    try {
+      await pool.query(
+        `UPDATE projects
+           SET digital_assets = COALESCE(digital_assets, '[]'::jsonb) || jsonb_build_array($2::jsonb)
+         WHERE id = $1 OR lower(id) = lower($1)`,
+        [projectId, JSON.stringify(assetEntry)]
+      );
+    } catch (e) {
+      console.warn('[upload] append to projects.digital_assets failed:', (e as any)?.message || e);
+    }
+
+    try {
+      const cols = await getProjectFilesColumns();
+      const fields: string[] = ['project_id', 'file_name', 'file_path'];
+      const placeholders: string[] = ['$1', '$2', '$3'];
+      const values: any[] = [projectId, req.file.originalname, fileUrl];
+      let idx = 4;
+      if (cols.has('file_size')) {
+        fields.push('file_size'); placeholders.push(`$${idx++}`); values.push(req.file.size);
+      }
+      if (cols.has('file_type')) {
+        fields.push('file_type'); placeholders.push(`$${idx++}`); values.push(req.file.mimetype || inferredType);
+      }
+      await pool.query(
+        `INSERT INTO project_files (${fields.join(', ')}) VALUES (${placeholders.join(', ')})`,
+        values
+      );
+    } catch (e) {
+      console.warn('[upload] insert project_files failed:', (e as any)?.message || e);
+    }
+
+    return sendResponse(res, 200, {
+      code: 200,
+      success: true,
+      msg: 'File uploaded successfully',
+      data: {
+        filename: req.file.filename,
+        originalname: req.file.originalname,
+        path: fileUrl,
+        url: fileUrl,
+        size: req.file.size,
+        type: req.file.mimetype,
+        projectId,
+        asset: assetEntry,
+      }
+    });
+  } catch (error) {
+    console.error('Upload error:', error);
+    return sendResponse(res, 500, { code: 500, msg: 'Upload failed', success: false });
+  }
+});
+
+// 按项目目录一键回填 digital_assets（用于历史数据修复）
+app.post('/api/admin/backfill-project-assets', async (req, res) => {
+  try {
+    const projectId = String(req.body?.projectId || '').trim();
+    if (!projectId) {
+      return sendResponse(res, 400, { code: 400, success: false, msg: 'projectId is required' });
+    }
+
+    const resolved = resolveProjectUploadDir(projectId);
+    if (!resolved) {
+      return sendResponse(res, 404, { code: 404, success: false, msg: `目录不存在：${path.join(uploadsDir, projectId)}` });
+    }
+
+    const assets = listAssetsFromProjectDir(resolved.dirName, `asset-backfill-${Date.now()}`);
+
+    await pool.query(
+      `UPDATE projects SET digital_assets = $1::jsonb WHERE id = $2 OR lower(id) = lower($2)`,
+      [JSON.stringify(assets), projectId]
+    );
+
+    return sendResponse(res, 200, {
+      code: 200,
+      success: true,
+      msg: 'backfill success',
+      data: { projectId, count: assets.length, assets }
+    });
+  } catch (error) {
+    console.error('/api/admin/backfill-project-assets 错误：', error);
+    return sendResponse(res, 500, { code: 500, success: false, msg: 'backfill failed' });
+  }
+});
+
+let projectFilesColumnsCache: { cols: Set<string>; cachedAt: number } | null = null;
+const getProjectFilesColumns = async () => {
+  const now = Date.now();
+  if (projectFilesColumnsCache && now - projectFilesColumnsCache.cachedAt < 60_000) {
+    return projectFilesColumnsCache.cols;
+  }
+  const result = await pool.query(
+    `SELECT column_name
+       FROM information_schema.columns
+      WHERE table_schema = 'public' AND table_name = 'project_files'`
+  );
+  const cols = new Set<string>(result.rows.map((row: any) => String(row.column_name || '').trim()));
+  projectFilesColumnsCache = { cols, cachedAt: now };
+  return cols;
+};
+
+const parseJsonArraySafe = (value: any): any[] => {
+  if (Array.isArray(value)) return value;
+  if (!value) return [];
+  try {
+    const parsed = typeof value === 'string' ? JSON.parse(value) : value;
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+};
+
+app.get('/api/projects', async (req, res) => {
+  try {
+    let whereClause = '';
+    const params: any[] = [];
+    const brand_id = String(req.query?.brand_id || '').trim();
+    if (brand_id) {
+      whereClause = ' WHERE (client_name = $1 OR brand_id = $1)';
+      params.push(brand_id);
+    }
+
+    let query = `SELECT * FROM projects${whereClause}`;
+    query += ' ORDER BY created_at DESC';
+    
+    const result = await pool.query(query, params);
+    const projects = result.rows;
+
+    const projectIds = result.rows.map((row: any) => String(row.id || '')).filter(Boolean);
+    const filesByProjectId = new Map<string, any[]>();
+    if (projectIds.length > 0) {
+      try {
+        const cols = await getProjectFilesColumns();
+        const selectCols = [
+          'project_id',
+          'file_name',
+          'file_path',
+          cols.has('file_size') ? 'file_size' : null,
+          cols.has('file_type') ? 'file_type' : null,
+          cols.has('upload_time') ? 'upload_time' : null,
+        ].filter(Boolean).join(', ');
+        const fileResult = await pool.query(
+          `SELECT ${selectCols} FROM project_files WHERE project_id = ANY($1::text[]) ORDER BY COALESCE(upload_time, NOW()) DESC`,
+          [projectIds]
+        );
+        for (const fileRow of fileResult.rows) {
+          const pid = String((fileRow as any).project_id || '');
+          if (!pid) continue;
+          const list = filesByProjectId.get(pid) || [];
+          list.push(fileRow);
+          filesByProjectId.set(pid, list);
+        }
+      } catch (e) {
+        console.warn('[projects] project_files fallback query failed:', (e as any)?.message || e);
+      }
+    }
+
+    const mapped = result.rows.map(row => {
+      let digitalAssets = parseJsonArraySafe(row.digital_assets);
+      if (digitalAssets.length === 0) {
+        const fallbackFiles = filesByProjectId.get(String(row.id || '')) || [];
+        digitalAssets = fallbackFiles.map((fileRow: any, idx: number) => {
+          const fileName = String(fileRow.file_name || '').trim() || `file-${idx + 1}`;
+          const filePath = String(fileRow.file_path || '').trim();
+          const normalizedUrl = filePath.startsWith('/uploads/')
+            ? filePath
+            : filePath.startsWith('uploads/')
+              ? `/${filePath}`
+              : filePath.includes('/uploads/')
+                ? filePath.slice(filePath.indexOf('/uploads/'))
+                : filePath || '#';
+          const type = inferAssetTypeFromFileName(fileName);
+          const sizeLabel = formatAssetSize(fileRow.file_size);
+          const uploadDate = fileRow.upload_time
+            ? new Date(fileRow.upload_time).toISOString().split('T')[0]
+            : new Date().toISOString().split('T')[0];
+          return {
+            id: `pf-${row.id}-${idx}`,
+            name: fileName,
+            type,
+            url: normalizedUrl,
+            size: sizeLabel,
+            uploadDate,
+          };
+        });
+      }
+      if (digitalAssets.length === 0) {
+        digitalAssets = listAssetsFromProjectDir(String(row.id || ''), 'fs');
+      }
+      if (digitalAssets.length === 0) {
+        digitalAssets = findAssetsByLooseProjectMatch(row);
+      }
+
+      return {
+        ...row,
+        digitalAssets,
+        digital_assets: digitalAssets,
+      };
+    });
+
+    sendResponse(res, 200, { code: 200, msg: 'success', data: mapped });
+  } catch (error) {
+    console.error('Get projects error:', error);
+    sendResponse(res, 500, { code: 500, msg: 'Failed to get projects', success: false });
+  }
+});
+
+app.listen(PORT, async () => {
+  try {
+    await ensureMaterialsTableColumns(pool as unknown as Pool);
+    await seedMaterialsDisplayData(pool as unknown as Pool);
+    await ensureMaterialsPriceTiers(pool as unknown as Pool);
+    await ensureMaterialsPriceRules(pool as unknown as Pool);
+    await ensureBrandsTable(pool as unknown as Pool);
+    await ensureCountryCodeColumns(pool as unknown as Pool);
+    await ensureProjectFilesTable(pool as unknown as Pool);
+    await ensureRestaurantBrandsMigration(pool as unknown as Pool);
+    await ensureBomAssemblyRulesTable(pool as unknown as Pool);
+    await ensureMaterialFormsMigration(pool as unknown as Pool);
+    await ensureUsersStatusAndBrandColumns(pool as unknown as Pool);
+    await ensureBrandIdNameColumns(pool as unknown as Pool);
+    await ensureSiteSettingsTable(pool as unknown as Pool);
+    await ensureCasesTable(pool as unknown as Pool);
+    await ensureBrandCategoryColumns(pool as unknown as Pool);
+    await ensureProjectsBrandColumns(pool as unknown as Pool);
+    await ensureUsersBrandIdType(pool as unknown as Pool);
+    await ensureProjectsLeadStatusColumn(pool as unknown as Pool);
+    await ensureProjectsFeishuColumns(pool as unknown as Pool);
+    await ensureProjectsTeamMembersColumns(pool as unknown as Pool);
+    await ensureProjectsAiCrawlColumns(pool as unknown as Pool);
+    await ensureProjectsFeishuMemberColumns(pool as unknown as Pool);
+    await ensureProjectsStageBannerColumns(pool as unknown as Pool);
+    await ensureProjectTodosTable(pool as unknown as Pool);
+    await ensureTodosDeptIdsMigration(pool as unknown as Pool);
+    await ensureProjectTodosLocationField(pool as unknown as Pool);
+    await ensureProjectTodoAuditColumns(pool as unknown as Pool);
+    await ensureProjectTodoReminderFields(pool as unknown as Pool);
+    await ensureInventoryTables(pool as unknown as Pool);
+    await syncInventoryFromMaterials(pool as unknown as Pool);
+    await seedInventory(pool as unknown as Pool);
+    await ensureSuppliersTable(pool as unknown as Pool);
+    await seedDefaultSuppliers(pool as unknown as Pool);
+    await ensureInventoryOperationLogsTable(pool as unknown as Pool);
+    await ensureInventoryFieldsColumns(pool as unknown as Pool);
+    await ensureInventoryTrackingColumns(pool as unknown as Pool);
+    await ensureProjectsGeoTextColumns(pool as unknown as Pool);
+    await ensureMarketResearchTables(pool as unknown as Pool);
+    await ensureProjectsRegionColumn(pool as unknown as Pool);
+    await ensureBrandAiInfoTable(pool as unknown as Pool);
+    await ensureChatMessageMetaColumns(pool as unknown as Pool);
+    await ensureProjectsDatesColumns(pool as unknown as Pool);
+    await ensureProjectsBrandColorColumns(pool as unknown as Pool);
+    await ensureProjectsStatusFieldsMigration(pool as unknown as Pool);
+    await ensureProjectsCustomStatusColumn(pool as unknown as Pool);
+    await ensureProjectsSalesColumns(pool as unknown as Pool);
+    await ensureProjectsAreaValueMigration(pool as unknown as Pool);
+    await ensureProjectsCurrencyMigration(pool as unknown as Pool);
+    await ensureProjectTodoDepartmentColumn(pool as unknown as Pool);
+    await ensureProjectsAddressFieldsMigration(pool as unknown as Pool);
+    await ensureProjectTodoTaskDatesColumn(pool as unknown as Pool);
+    await ensureProjectTodoReminderSnapshotsColumn(pool as unknown as Pool);
+    await ensureFeishuReminderLogsTable(pool as unknown as Pool);
+    await ensureProjectQuoteColumns(pool as unknown as Pool);
+    await ensureBrandAiCollectionsTables(pool as unknown as Pool);
+    await ensureProjectAiConversationsTable(pool as unknown as Pool);
+    await ensureProjectsMapCustomLightStyleColumn(pool as unknown as Pool);
+    await ensureProjectTodoFormContentColumns(pool as unknown as Pool);
+    await ensureProjectTodosApprovalColumns(pool as unknown as Pool);
+    await ensureProjectTodoRootTodoIdColumn(pool as unknown as Pool);
+    await ensureProjectTodoBranchVersionColumns(pool as unknown as Pool);
+    await ensureProjectsLeadSourceColumn(pool as unknown as Pool);
+    await ensureProjectTodoRelationModeColumn(pool as unknown as Pool);
+    await ensureBrandAiSourcePathColumn(pool as unknown as Pool);
+    await ensureProjectsCrawlerRawTextColumns(pool as unknown as Pool);
+    await ensureProjectsAiAssistantColumns(pool as unknown as Pool);
+    await ensureBrandAiTagColumns(pool as unknown as Pool);
+    await ensureProjectMaterialsColumns(pool as unknown as Pool);
+    await ensurePackingListColumns(pool as unknown as Pool);
+    await ensureProjectTodoDepartmentStartDateColumn(pool as unknown as Pool);
+    await ensureProjectTodoReviewColumns(pool as unknown as Pool);
+    await ensureProjectsRequirementFieldsMigration(pool as unknown as Pool);
+    await ensureBrandAiPromptColumns(pool as unknown as Pool);
+    await ensureProjectTodosReviewRoundColumn(pool as unknown as Pool);
+    await ensureBrandsRestaurantCacheColumns(pool as unknown as Pool);
+    await ensureProjectsCollaborationModeColumn(pool as unknown as Pool);
+    await ensureChatMessagesSummaryColumn(pool as unknown as Pool);
+    await ensureProjectsCardSummaryColumn(pool as unknown as Pool);
+    await ensureBrandAiGeneratedByColumns(pool as unknown as Pool);
+    await ensureProjectTodosChecklistColumns(pool as unknown as Pool);
+    await ensureProjectTodosFormNodesColumns(pool as unknown as Pool);
+    await ensureProjectTodosRoadmapColumns(pool as unknown as Pool);
+    await ensureProjectTodoBlueprintColumns(pool as unknown as Pool);
+    await ensureProjectTodosLevelColumn(pool as unknown as Pool);
+    await ensureProjectBomAndQuoteTables(pool as unknown as Pool);
+    await ensureProjectTodoBlueprintFloorplanColumns(pool as unknown as Pool);
+    await ensureProjectTodoAutoTaskOrderColumn(pool as unknown as Pool);
+    await ensureProjectMaterialCodesTable(pool as unknown as Pool);
+    await ensureProjectCategoriesTable(pool as unknown as Pool);
+    await ensureProjectTodosActionButtonsColumns(pool as unknown as Pool);
+    await ensureProjectTodoMilestoneColumns(pool as unknown as Pool);
+    await ensureProjectTodoCustomerNotifyColumn(pool as unknown as Pool);
+    await ensureProjectTodoReviewUnlockColumns(pool as unknown as Pool);
+    await ensurePackingListAuditColumns(pool as unknown as Pool);
+    await ensureMaterialsItemSchemaColumns(pool as unknown as Pool);
+    await ensureBomQuoteCountersTable(pool as unknown as Pool);
+    await ensureProjectTodoReviewSummaryColumns(pool as unknown as Pool);
+    await ensureProjectTodoCustomerNotifyRichTextColumns(pool as unknown as Pool);
+    await ensureProjectTodosDeliveryDatesColumns(pool as unknown as Pool);
+    await ensureProjectLocationsBrandFieldsMigration(pool as unknown as Pool);
+    await ensureProjectTodoEditableBlockersColumn(pool as unknown as Pool);
+    await ensureProjectsNoSalesReasonColumn(pool as unknown as Pool);
+    await ensureProjectsWonLostAtColumns(pool as unknown as Pool);
+    await ensureMaterialsBrandProductNoColumn(pool as unknown as Pool);
+    await ensureMessageRecallTables(pool as unknown as Pool);
+    await ensureGoogleMapsTables(pool as unknown as Pool);
+    await ensureProjectTodoTimestampColumns(pool as unknown as Pool);
+    await ensureProjectTodoReviewSummaryTimestampsColumns(pool as unknown as Pool);
+    await ensurePackingListTableCardsColumns(pool as unknown as Pool);
+    await ensureProjectTodosKaTeXColumns(pool as unknown as Pool);
+    await ensureProjectsPropertyStatusColumn(pool as unknown as Pool);
+    await ensurePackingListOrderDetailColumns(pool as unknown as Pool);
+    await ensureProjectCategoriesCatalogColumns(pool as unknown as Pool);
+    await ensureProjectsMeetingFieldsColumns(pool as unknown as Pool);
+    await ensureMaterialsUnitInfoColumns(pool as unknown as Pool);
+    await ensureProjectTodosQuoteColumns(pool as unknown as Pool);
+    await ensureProjectTodoReviewWeightColumns(pool as unknown as Pool);
+    await ensureProjectTodoQuoteFieldsColumns(pool as unknown as Pool);
+    await ensureProjectsLeadStatusStageColumns(pool as unknown as Pool);
+    await ensureProjectsCommercialSpaceColumn(pool as unknown as Pool);
+    await ensurePackingListCardsSummaryColumns(pool as unknown as Pool);
+    await ensureProjectTodoTaskMergeColumns(pool as unknown as Pool);
+    await ensureMarketResearchDataSourceColumns(pool as unknown as Pool);
+    await ensureProjectsPropertyStatusRequiredColumn(pool as unknown as Pool);
+    await ensureProjectStageKeypointsColumns(pool as unknown as Pool);
+    await ensureFeishuMemberSyncLogsTable(pool as unknown as Pool);
+    await ensureProjectsMarketResearchDoneColumn(pool as unknown as Pool);
+    console.log(`Server is running on http://localhost:${PORT}`);
+  } catch (error) {
+    console.error('Server startup migration error:', error);
+    console.log(`Server is running on http://localhost:${PORT}`);
+  }
+});

@@ -1,0 +1,11 @@
+file:///E:/renli0418/check-bom-schema.js:3
+  const matCols = await pool.query(\"SELECT column_name, data_type FROM information_schema.columns WHERE table_name = 'materials'\");
+                                   ^
+
+SyntaxError: Invalid or unexpected token
+    at ModuleLoader.moduleStrategy (node:internal/modules/esm/translators:167:18)
+    at callTranslator (node:internal/modules/esm/loader:285:14)
+    at ModuleLoader.moduleProvider (node:internal/modules/esm/loader:291:30)
+    at async link (node:internal/modules/esm/module_job:76:21)
+
+Node.js v20.11.0

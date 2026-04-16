@@ -1,0 +1,165 @@
+﻿id,category,pic_subfolder,name,old_code,new_code,image_old_exists,image_new_exists,pic_file_status,prefix_vs_category,image_filename_csv
+6,五金杂件及工程灯具,五金杂件及工程灯具,灯带-线型灯AL-1510,CE11-BKCH-HWELI-006,HW10-GYHG-ALX-001,no,yes.png,ok_new_name,可疑:首段=CE11 期望以HW/MT/CM开头,CE11-BKCH-HWELI-006.png
+7,五金杂件及工程灯具,五金杂件及工程灯具,灯带-线型灯灯带,CE11-BKCH-HWELI-007,HW10-GYHG-X2C2-001,no,yes.png,ok_new_name,可疑:首段=CE11 期望以HW/MT/CM开头,CE11-BKCH-HWELI-007.png
+8,五金杂件及工程灯具,五金杂件及工程灯具,LED灯-瓦楞灯,CE11-BKCH-HWELI-008,HW10-GYHG-LED-001,no,yes.png,ok_new_name,可疑:首段=CE11 期望以HW/MT/CM开头,CE11-BKCH-HWELI-008.png
+9,五金杂件及工程灯具,五金杂件及工程灯具,开关-防溅盒,CE11-BKCH-HWHPS-001,HW10-GYHG-X419-001,no,yes.png,ok_new_name,可疑:首段=CE11 期望以HW/MT/CM开头,CE11-BKCH-HWHPS-001.png
+10,五金杂件及工程灯具,五金杂件及工程灯具,插口-网络插座,CE11-BKCH-HWSWI-003,HW10-GYHG-X1C0-001,no,yes.png,ok_new_name,可疑:首段=CE11 期望以HW/MT/CM开头,CE11-BKCH-HWSWI-003.png
+11,五金杂件及工程灯具,五金杂件及工程灯具,开关-单控单开,CE11-BKCH-HWSWI-004,HW10-GYHG-X021-001,no,yes.png,ok_new_name,可疑:首段=CE11 期望以HW/MT/CM开头,CE11-BKCH-HWSWI-004.png
+12,五金杂件及工程灯具,五金杂件及工程灯具,开关-单控双开,CE11-BKCH-HWSWI-005,HW10-GYHG-X79D-001,no,yes.png,ok_new_name,可疑:首段=CE11 期望以HW/MT/CM开头,CE11-BKCH-HWSWI-005.png
+13,五金杂件及工程灯具,五金杂件及工程灯具,开关-单控三开,CE11-BKCH-HWSWI-006,HW10-GYHG-X7D6-001,no,yes.png,ok_new_name,可疑:首段=CE11 期望以HW/MT/CM开头,CE11-BKCH-HWSWI-006.png
+14,五金杂件及工程灯具,五金杂件及工程灯具,变压器-线型灯电源,CE11-BKCH-HWTRA-001,HW10-GYHG-X478-001,no,yes.png,ok_new_name,可疑:首段=CE11 期望以HW/MT/CM开头,CE11-BKCH-HWTRA-001.png
+15,五金杂件及工程灯具,五金杂件及工程灯具,变压器-瓦楞灯电源,CE11-BKCH-HWTRA-002,HW10-GYHG-X2B8-001,no,yes.png,ok_new_name,可疑:首段=CE11 期望以HW/MT/CM开头,CE11-BKCH-HWTRA-002.png
+16,五金杂件及工程灯具,五金杂件及工程灯具,LED灯-集成平板灯,CE11-WHRN-HWELI-007,HW10-GYHG-LED-002,no,yes.png,ok_new_name,可疑:首段=CE11 期望以HW/MT/CM开头,CE11-WHRN-HWELI-007.png
+17,五金杂件及工程灯具,五金杂件及工程灯具,插座-一开多功能五孔,CE11-WHRN-HWSWI-001,HW10-GYHG-X529-001,no,yes.png,ok_new_name,可疑:首段=CE11 期望以HW/MT/CM开头,CE11-WHRN-HWSWI-001.png
+18,五金杂件及工程灯具,五金杂件及工程灯具,插座-欧标地插,CE11-WHRN-HWSWI-002,HW10-GYHG-X344-001,no,yes.png,ok_new_name,可疑:首段=CE11 期望以HW/MT/CM开头,CE11-WHRN-HWSWI-002.png
+19,五金杂件及工程灯具,五金杂件及工程灯具,结构胶- 透明玻璃胶,CM03-TRBT-HWGLU-001,HW10-GYHG-X64B-001,no,yes.png,ok_new_name,ok,CM03-TRBT-HWGLU-001.png
+20,五金杂件及工程灯具,五金杂件及工程灯具,工程零件-换气扇,CM05-WHRN-HWVEN-001,HW10-GYHG-X641-001,no,yes.png,ok_new_name,ok,CM05-WHRN-HWVEN-001.png
+21,五金杂件及工程灯具,五金杂件及工程灯具,射钉-T50直钉,MT06-GYQH-HWNIL-001,HW10-GYHG-XDF8-001,no,yes.png,ok_new_name,ok,MT06-GYQH-HWNIL-001.png
+22,五金杂件及工程灯具,五金杂件及工程灯具,工程零件-折叠门滑轮,MT08-HWRN-HWPUL-D01,HW10-GYHG-XDA9-001,no,yes.png,ok_new_name,ok,MT08-HWRN-HWPUL-D01.png
+23,五金杂件及工程灯具,五金杂件及工程灯具,工程零件-折叠门吊轨,MT08-HWRN-HWTRK-D01,HW10-GYHG-X139-001,no,yes.png,ok_new_name,ok,MT08-HWRN-HWTRK-D01.png
+24,五金杂件及工程灯具,五金杂件及工程灯具,工程零件- 阻尼 隐形闭门合页 5寸,MT08-MEGT-HWDAM-D01,HW10-GYHG-NFMB-001,no,yes.png,ok_new_name,ok,MT08-MEGT-HWDAM-D01.png
+25,五金杂件及工程灯具,五金杂件及工程灯具,工程零件-黄铜小钉,MT08-MEGT-HWNIL-001,HW10-GYHG-XD08-001,no,yes.png,ok_new_name,ok,MT08-MEGT-HWNIL-001.png
+26,五金杂件及工程灯具,五金杂件及工程灯具,装饰零件-11mm黄铜泡钉,MT08-MEGT-HWNIL-002,HW10-GYHG-MMX-001,no,yes.png,ok_new_name,ok,MT08-MEGT-HWNIL-002.png
+27,五金杂件及工程灯具,五金杂件及工程灯具,装饰零件-泡钉,MT08-MEGT-HWNIL-003,HW10-GYHG-X965-001,no,yes.png,ok_new_name,ok,MT08-MEGT-HWNIL-003.png
+28,五金杂件及工程灯具,五金杂件及工程灯具,装饰零件- 20公分铜狮头,MT08-MEGT-MMCMP-003,HW10-GYHG-X6D1-001,no,yes.png,ok_new_name,ok,MT08-MEGT-MMCMP-003.png
+29,厨房电器及设备,厨房电器及设备,厨房设备- 单通工作柜,MT01-NTBX-EQKAT-001,KT08-GYHG-X26E-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-001.png
+30,厨房电器及设备,厨房电器及设备,厨房设备- 定制打锅架,MT01-NTBX-EQKAT-002,KT08-GYHG-XA4B-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-002.png
+31,厨房电器及设备,厨房电器及设备,厨房设备- 定制锅架-单通,MT01-NTBX-EQKAT-003,KT08-GYHG-SYN-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-003.png
+32,厨房电器及设备,厨房电器及设备,厨房设备- 定制货柜 上掀门,MT01-NTBX-EQKAT-004,KT08-GYHG-SYK-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-004.png
+33,厨房电器及设备,厨房电器及设备,厨房设备- 单通碗柜,MT01-NTBX-EQKAT-005,KT08-GYHG-X334-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-005.png
+34,厨房电器及设备,厨房电器及设备,厨房设备- 单通碗柜(无报告),MT01-NTBX-EQKAT-006,KT08-GYHG-SNC-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-006.png
+35,厨房电器及设备,厨房电器及设备,厨房设备-炉平台,MT01-NTBX-EQKAT-007,KT08-GYHG-X7B6-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-007.png
+36,厨房电器及设备,厨房电器及设备,厨房设备- 双层挂墙架,MT01-NTBX-EQKAT-008,KT08-GYHG-X5A2-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-008.png
+37,厨房电器及设备,厨房电器及设备,厨房设备- 双层台上架,MT01-NTBX-EQKAT-009,KT08-GYHG-X89F-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-009.png
+38,厨房电器及设备,厨房电器及设备,厨房设备- 脏碗架,MT01-NTBX-EQKAT-010,KT08-GYHG-X9B9-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-010.png
+39,厨房电器及设备,厨房电器及设备,厨房设备- 五层货架,MT01-NTBX-EQKAT-011,KT08-GYHG-X645-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-011.png
+40,厨房电器及设备,厨房电器及设备,厨房设备- 单星洗池柜,MT01-NTBX-EQKAT-012,KT08-GYHG-XA75-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-012.png
+41,厨房电器及设备,厨房电器及设备,厨房设备- 三星水池,MT01-NTBX-EQKAT-013,KT08-GYHG-X4BA-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-013.png
+42,厨房电器及设备,厨房电器及设备,厨房设备- 残渣台,MT01-NTBX-EQKAT-014,KT08-GYHG-X5AF-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-014.png
+43,厨房电器及设备,厨房电器及设备,厨房设备- 活动双层工作台,MT01-NTBX-EQKAT-015,KT08-GYHG-X533-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-015.png
+44,厨房电器及设备,厨房电器及设备,厨房设备- 定制异性工作台,MT01-NTBX-EQKAT-016,KT08-GYHG-XE9E-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-016.png
+45,厨房电器及设备,厨房电器及设备,厨房设备- 前置台,MT01-NTBX-EQKAT-017,KT08-GYHG-X851-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-017.png
+46,厨房电器及设备,厨房电器及设备,厨房设备- 洁碟台,MT01-NTBX-EQKAT-018,KT08-GYHG-X257-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-018.png
+47,厨房电器及设备,厨房电器及设备,厨房电器- 冷藏操作台- 风冷,MT01-NTBX-EQKAT-019,KT08-GYHG-SPO-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-019.png
+48,厨房电器及设备,厨房电器及设备,厨房电器- 冷冻操作台- 风冷,MT01-NTBX-EQKAT-020,KT08-GYHG-SPO-002,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-020.png
+49,厨房电器及设备,厨房电器及设备,厨房电器- 调料台 常规款,MT01-NTBX-EQKAT-021,KT08-GYHG-SPS-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-021.png
+50,厨房电器及设备,厨房电器及设备,厨房电器- 双门双通展示柜 1500款,MT01-NTBX-EQKAT-022,KT08-GYHG-SCX-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-022.png
+51,厨房电器及设备,厨房电器及设备,厨房电器- 制冰机- 500KG分体式 雪花颗粒冰,MT01-NTBX-EQKAT-023,KT08-GYHG-KGX-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-023.png
+52,厨房电器及设备,厨房电器及设备,厨房电器- 刨片机 14寸全自动台式刨片机,MT01-NTBX-EQKAT-024,KT08-GYHG-SYX-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-024.png
+53,厨房电器及设备,厨房电器及设备,厨房电器- 高汤炉 （电),MT01-NTBX-EQKAT-025,KT08-GYHG-SQB-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-025.png
+54,厨房电器及设备,厨房电器及设备,厨房电器- 10层热风电烤箱(带喷雾)带底座,MT01-NTBX-EQKAT-026,KT08-GYHG-SXAA-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-026.png
+55,厨房电器及设备,厨房电器及设备,厨房电器- 揭盖式洗碗机,MT01-NTBX-EQKAT-027,KT08-GYHG-X921-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-027.png
+56,厨房电器及设备,厨房电器及设备,厨房燃气设备 -2头煲仔炉 （燃气）,MT01-NTBX-EQKAT-028,KT08-GYHG-SYD-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-028.png
+57,厨房电器及设备,厨房电器及设备,厨房燃气设备- 冒菜桶,MT01-NTBX-EQKAT-029,KT08-GYHG-XF47-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-029.png
+58,厨房电器及设备,厨房电器及设备,厨房燃气设备-蒸包炉,MT01-NTBX-EQKAT-030,KT08-GYHG-X31D-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-030.png
+59,厨房电器及设备,厨房电器及设备,厨房燃气设备-蒸炉,MT01-NTBX-EQKAT-031,KT08-GYHG-XE88-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-031.png
+60,厨房电器及设备,厨房电器及设备,厨房电器- 台式切片机,MT01-NTBX-EQKAT-032,KT08-GYHG-XA37-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-032.png
+61,厨房电器及设备,厨房电器及设备,厨房电器- 落地式切片机,MT01-NTBX-EQKAT-033,KT08-GYHG-X973-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-033.png
+62,厨房电器及设备,厨房电器及设备,厨房电器- 长龙式通道洗碗机,MT01-NTBX-EQKAT-034,KT08-GYHG-X497-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-034.png
+63,厨房电器及设备,厨房电器及设备,厨房电器- 24盘蒸饭车（智能电脑版）,MT01-NTBX-EQKAT-035,KT08-GYHG-SYA-001,no,yes.png,ok_new_name,ok,MT01-NTBX-EQKAT-035.png
+64,墙地瓷砖制品,墙地瓷砖制品,地砖- 灰色通体仿古砖,CE04-GYHG-FDFLT-001,TI02-GYHG-TIFGW-001,no,yes.png,ok_new_name,可疑:首段=CE04 期望以TI开头,CE04-GYHG-FDFLT-001.png
+65,墙地瓷砖制品,墙地瓷砖制品,地砖- 灰色哑光砖,CE04-GYHG-FDFLT-002,TI02-GYHG-TIYAG-001,no,yes.png,ok_new_name,可疑:首段=CE04 期望以TI开头,CE04-GYHG-FDFLT-002.png
+66,墙地瓷砖制品,墙地瓷砖制品,地砖- 吸水砖,CE04-GYHG-FDFLT-003,TI02-GYHG-TIDG-001,no,yes.png,ok_new_name,可疑:首段=CE04 期望以TI开头,CE04-GYHG-FDFLT-003.png
+67,墙地瓷砖制品,墙地瓷砖制品,墙砖- 白色格子,CE04-WHTZ-WDWLT-001,TI02-GYHG-X843-001,no,yes.png,ok_new_name,可疑:首段=CE04 期望以TI开头,CE04-WHTZ-WDWLT-001.png
+69,定制中式建筑结构,定制中式建筑结构,装饰结构 - 美人靠,CE01-GYHG-ABHRG-001,ST03-GYHG-X4BB-001,no,yes.png,ok_new_name,可疑:首段=CE01 期望以ST/WD开头,CE01-GYHG-ABHRG-001.png
+70,定制中式建筑结构,定制中式建筑结构,镶板-普通板,CE01-GYHG-ABRTL-001,ST03-GYHG-X288-001,no,yes.png,ok_new_name,可疑:首段=CE01 期望以ST/WD开头,CE01-GYHG-ABRTL-001.png
+71,定制中式建筑结构,定制中式建筑结构,格窗-普通格窗,WD012-WDAM-ABBAL-002,ST03-GYHG-X6F5-001,no,yes.png,ok_new_name,ok,WD012-WDAM-ABBAL-002.png
+72,定制中式建筑结构,定制中式建筑结构,锤莲柱-莲花型,WD012-WDAM-ABCOR-001,ST03-GYHG-X14A-001,no,yes.png,ok_new_name,ok,WD012-WDAM-ABCOR-001.png
+73,定制中式建筑结构,定制中式建筑结构,撑弓-龙戏珠,WD012-WDAM-ABCOR-002,ST03-GYHG-XEC1-001,no,yes.png,ok_new_name,ok,WD012-WDAM-ABCOR-002.png
+74,定制中式建筑结构,定制中式建筑结构,矮隔断-普通款,WD012-WDAM-ABCOR-003,ST03-GYHG-XE63-001,no,yes.png,ok_new_name,ok,WD012-WDAM-ABCOR-003.png
+75,定制中式建筑结构,定制中式建筑结构,挂落- 大雕花挂落,WD012-WDAM-ABCOR-004,ST03-GYHG-X7E7-001,no,yes.png,ok_new_name,ok,WD012-WDAM-ABCOR-004.png
+76,定制中式建筑结构,定制中式建筑结构,格窗-镶板格窗,WD012-WDAM-ABFHS-001,ST03-GYHG-X845-001,no,yes.png,ok_new_name,ok,WD012-WDAM-ABFHS-001.png
+77,定制中式建筑结构,定制中式建筑结构,门-双开门,WD012-WDAM-ABHOC-001,ST03-GYHG-XA82-001,no,yes.png,ok_new_name,ok,WD012-WDAM-ABHOC-001.png
+78,定制中式建筑结构,定制中式建筑结构,普通牌匾-卡座牌匾,WD012-WDAM-ABLIT-001,ST03-GYHG-X094-001,no,yes.png,ok_new_name,ok,WD012-WDAM-ABLIT-001.png
+79,定制中式建筑结构,定制中式建筑结构,木梁-雕花梁,WD012-WDAM-ABPED-004,ST03-GYHG-X95E-001,no,yes.png,ok_new_name,ok,WD012-WDAM-ABPED-004.png
+80,定制中式建筑结构,定制中式建筑结构,基础古建结构-椽,WD012-WDAM-ABPED-005,ST03-GYHG-XB9A-001,no,yes.png,ok_new_name,ok,WD012-WDAM-ABPED-005.png
+81,定制中式建筑结构,定制中式建筑结构,基础古建结构 四分之一圆立柱,WD012-WDAM-ABWPS-001,ST03-GYHG-XDD9-001,no,yes.png,ok_new_name,ok,WD012-WDAM-ABWPS-001.png
+82,定制中式建筑结构,定制中式建筑结构,雕刻角花,WD08-WDAM-ABBEA-001,ST03-GYHG-X9E4-001,no,yes.png,ok_new_name,ok,WD08-WDAM-ABBEA-001.png
+83,定制中式建筑结构,定制中式建筑结构,基础古建结构搏风板,WD08-WDAM-ABCOD-001,ST03-GYHG-X02A-001,no,yes.png,ok_new_name,ok,WD08-WDAM-ABCOD-001.png
+84,定制中式建筑结构,定制中式建筑结构,高隔断- 镂空雕花双夹,WD08-WDAM-ABCOL-001,ST03-GYHG-X464-001,no,yes.png,ok_new_name,ok,WD08-WDAM-ABCOL-001.png
+86,定制中式建筑结构,定制中式建筑结构,副窗-格子,WD08-WDAM-ABCOL-004,ST03-GYHG-X802-001,no,yes.png,ok_new_name,ok,WD08-WDAM-ABCOL-004.png
+87,定制中式建筑结构,定制中式建筑结构,发光牌匾-斗匾,WD08-WDAM-ABGEB-001,ST03-GYHG-X64B-001,no,yes.png,ok_new_name,ok,WD08-WDAM-ABGEB-001.png
+88,定制中式建筑结构,定制中式建筑结构,门-子母门,WD08-WDAM-ABHLC-001,ST03-GYHG-X4D6-001,no,yes.png,ok_new_name,ok,WD08-WDAM-ABHLC-001.png
+90,定制中式建筑结构,定制中式建筑结构,基础古建结构包金柱,WD08-WDAM-ABIPL-001,ST03-GYHG-XF75-001,no,yes.png,ok_new_name,ok,WD08-WDAM-ABIPL-001.png
+91,定制中式建筑结构,定制中式建筑结构,基础古建结构-檩,WD08-WDAM-ABLAT-002,ST03-GYHG-XA6F-001,no,yes.png,ok_new_name,ok,WD08-WDAM-ABLAT-002.png
+92,定制中式建筑结构,定制中式建筑结构,木梁-普通木梁,WD08-WDAM-ABSQR-001,ST03-GYHG-XA80-001,no,yes.png,ok_new_name,ok,WD08-WDAM-ABSQR-001.png
+93,定制中式建筑结构,定制中式建筑结构,门-单开门,WD08-WDAM-ABTAB-001,ST03-GYHG-XC56-001,no,yes.png,ok_new_name,ok,WD08-WDAM-ABTAB-001.png
+94,定制中式建筑结构,定制中式建筑结构,门- 黑漆彩绘大门,WD08-WDAM-ABTAB-002,ST03-GYHG-XBB7-001,no,yes.png,ok_new_name,ok,WD08-WDAM-ABTAB-002.png
+95,定制中式建筑结构,定制中式建筑结构,挂落- 小雕花挂落,WD08-WDAM-WBWPS-001,ST03-GYHG-X970-001,no,yes.png,ok_new_name,ok,WD08-WDAM-WBWPS-001.png
+96,定制活动家具及软装物料,定制活动家具及软装物料,鱼缸,CE02-HMWI-FFAOR-001,FN06-GYHG-X7DA-001,yes.png,no,still_old_name,可疑:首段=CE02 期望以FN开头,CE02-HMWI-FFAOR-001.png
+98,定制活动家具及软装物料,定制活动家具及软装物料,门帘-人造皮革,RDEH FB07-MFCCU-001,FN06-GYHG-XCB8-001,yes.png,no,still_old_name,可疑:首段=RDEH FB07 期望以FN开头,RDEH FB07-MFCCU-001.png
+99,定制活动家具及软装物料,定制活动家具及软装物料,挂画-普通挂画,RDEH FB07-MFHGB-001,FN06-GYHG-X469-001,yes.png,no,still_old_name,可疑:首段=RDEH FB07 期望以FN开头,RDEH FB07-MFHGB-001.png
+100,定制活动家具及软装物料,定制活动家具及软装物料,挂画-包间牌匾,RDEH FB07-MFHGB-002,FN06-GYHG-X837-001,yes.png,no,still_old_name,可疑:首段=RDEH FB07 期望以FN开头,RDEH FB07-MFHGB-002.png
+101,定制活动家具及软装物料,定制活动家具及软装物料,桌椅-单椅,WD08-WDAM-MFCHR-001,FN06-GYHG-X162-001,yes.png,no,still_old_name,可疑:首段=WD08 期望以FN开头,WD08-WDAM-MFCHR-001.png
+102,定制活动家具及软装物料,定制活动家具及软装物料,桌椅-双人椅,WD08-WDAM-MFCHR-002,FN06-GYHG-X71E-001,yes.png,no,still_old_name,可疑:首段=WD08 期望以FN开头,WD08-WDAM-MFCHR-002.png
+103,定制活动家具及软装物料,定制活动家具及软装物料,桌椅-龙椅,WD08-WDAM-MFCHR-003,FN06-GYHG-X788-001,yes.png,no,still_old_name,可疑:首段=WD08 期望以FN开头,WD08-WDAM-MFCHR-003.png
+104,定制活动家具及软装物料,定制活动家具及软装物料,桌椅-圆桌,WD08-WDAM-MFTBL-001,FN06-GYHG-X139-001,yes.png,no,still_old_name,可疑:首段=WD08 期望以FN开头,WD08-WDAM-MFTBL-001.png
+105,定制活动家具及软装物料,定制活动家具及软装物料,桌椅-方桌,WD08-WDAM-MFTBL-002,FN06-GYHG-XBDE-001,yes.png,no,still_old_name,可疑:首段=WD08 期望以FN开头,WD08-WDAM-MFTBL-002.png
+106,定制活动家具及软装物料,定制活动家具及软装物料,桌椅-条桌,WD08-WDAM-MFTBL-003,FN06-GYHG-X7ED-001,yes.png,no,still_old_name,可疑:首段=WD08 期望以FN开头,WD08-WDAM-MFTBL-003.png
+107,定制活动家具及软装物料,定制活动家具及软装物料,桌椅-菜架,WD08-WDAM-MFTBL-004,FN06-GYHG-X1DC-001,yes.png,no,still_old_name,可疑:首段=WD08 期望以FN开头,WD08-WDAM-MFTBL-004.png
+108,定制活动家具及软装物料,定制活动家具及软装物料,桌椅-迎宾台,WD08-WDAM-MFTBL-005,FN06-GYHG-X8CE-001,yes.png,no,still_old_name,可疑:首段=WD08 期望以FN开头,WD08-WDAM-MFTBL-005.png
+109,定制玻璃钢雕塑,定制玻璃钢雕塑,定制艺术品 -龙头,CMO4-MEGT-CACAW-001,FG05-GYHG-XE1E-001,no,yes.png,ok_new_name,可疑:首段=CMO4 期望以FG开头,CMO4-MEGT-CACAW-001.png
+167,定制石材制品,定制石材制品,台面大理石,ST01-BKCH-FFFIN-001,ST07-GYHG-X131-001,no,yes.png,ok_new_name,ok,ST01-BKCH-FFFIN-001.png
+163,定制石材制品,定制石材制品,方形雕花柱础,ST012-GYHG-ABPED-001,ST07-GYHG-XC30-001,no,yes.png,ok_new_name,ok,ST012-GYHG-ABPED-001.png
+164,定制石材制品,定制石材制品,1/4八边雕花柱础,ST012-GYHG-ABPED-002,ST07-GYHG-XCF0-001,no,yes.png,ok_new_name,ok,ST012-GYHG-ABPED-002.png
+169,定制石材制品,定制石材制品,石材-宜宾黑烧面门槛石,ST02-BKYB-FDFLR-001,ST07-GYHG-XA01-001,no,yes.png,ok_new_name,ok,ST02-BKYB-FDFLR-001.png
+162,定制石材制品,定制石材制品,栓马桩,ST03-BLTQ-ABGUA-001,ST07-GYHG-X5B6-001,no,yes.png,ok_new_name,ok,ST03-BLTQ-ABGUA-001.png
+166,定制石材制品,定制石材制品,吸金兽,ST03-BLTQ-ABGUA-002,ST07-GYHG-X1DE-001,no,yes.png,ok_new_name,ok,ST03-BLTQ-ABGUA-002.png
+165,定制石材制品,定制石材制品,室外柱础,ST03-BLTQ-ABPED-003,ST07-GYHG-XBEB-001,no,yes.png,ok_new_name,ok,ST03-BLTQ-ABPED-003.png
+168,定制石材制品,定制石材制品,细砂白玉石,ST13-WHRN-FFFIN-001,ST07-GYHG-XB96-001,no,yes.png,ok_new_name,ok,ST13-WHRN-FFFIN-001.png
+110,定制金属制品,定制金属制品,定制不锈钢踢脚线,MT01-MEGT-MMCMP-001,MT04-GYHG-X647-001,no,yes.png,ok_new_name,ok,MT01-MEGT-MMCMP-001.png
+111,定制金属制品,定制金属制品,定制黄铜龙摆件（锅具配件）,MT01-MEGT-MMCMP-002,MT04-GYHG-X722-001,no,yes.png,ok_new_name,ok,MT01-MEGT-MMCMP-002.png
+112,定制金属制品,定制金属制品,锅圈,MT01-MEGT-MMCMP-003,MT04-GYHG-X3B6-001,no,yes.png,ok_new_name,ok,MT01-MEGT-MMCMP-003.png
+113,定制金属制品,定制金属制品,锅具- 平耳铜红锅 电磁炉版,MT08-MEGT-EQCKW-001,MT04-GYHG-HZB-001,no,yes.png,ok_new_name,ok,MT08-MEGT-EQCKW-001.png
+114,定制金属制品,定制金属制品,锅具- 平耳铜红锅 燃气版,MT08-MEGT-EQCKW-002,MT04-GYHG-HZD-001,no,yes.png,ok_new_name,ok,MT08-MEGT-EQCKW-002.png
+125,定制金属制品,定制金属制品,黄铜条,MT08-MEGT-MMCMP-001,MT04-GYHG-X613-001,no,yes.png,ok_new_name,ok,MT08-MEGT-MMCMP-001.png
+1,五金杂件及工程灯具,五金杂件及工程灯具,射灯-明装射灯,CE11-BKCH-HWELI-001,HW10-GYHG-X8FB-001,no,yes.png,ok_new_name,可疑:首段=CE11 期望以HW/MT/CM开头,CE11-BKCH-HWELI-001.png
+2,五金杂件及工程灯具,五金杂件及工程灯具,射灯-暗装射灯,CE11-BKCH-HWELI-002,HW10-GYHG-X939-001,no,yes.png,ok_new_name,可疑:首段=CE11 期望以HW/MT/CM开头,CE11-BKCH-HWELI-002.png
+3,五金杂件及工程灯具,五金杂件及工程灯具,射灯-暗装筒灯,CE11-BKCH-HWELI-003,HW10-GYHG-X498-001,no,yes.png,ok_new_name,可疑:首段=CE11 期望以HW/MT/CM开头,CE11-BKCH-HWELI-003.png
+4,五金杂件及工程灯具,五金杂件及工程灯具,灯带-低压灯带,CE11-BKCH-HWELI-004,HW10-GYHG-X50F-001,no,yes.png,ok_new_name,可疑:首段=CE11 期望以HW/MT/CM开头,CE11-BKCH-HWELI-004.png
+5,五金杂件及工程灯具,五金杂件及工程灯具,灯带-灯带接头,CE11-BKCH-HWELI-005,HW10-GYHG-X1CB-001,no,yes.png,ok_new_name,可疑:首段=CE11 期望以HW/MT/CM开头,CE11-BKCH-HWELI-005.png
+68,定制中式建筑结构,定制中式建筑结构,镶板-雕花镶板,CE01-GYHG-ABETH-001,ST03-GYHG-X98C-001,no,yes.png,ok_new_name,可疑:首段=CE01 期望以ST/WD开头,CE01-GYHG-ABETH-001.png
+89,定制中式建筑结构,定制中式建筑结构,基础古建结构 雕龙圆立柱,WD08-WDAM-ABIPA-001,ST03-GYHG-XF51-001,no,yes.png,ok_new_name,ok,WD08-WDAM-ABIPA-001.png
+134,小型电器及设备,小型电器及设备,一体机冷凝净化器,MT01-BKCH-EQPRE-006,EL09-GYHG-XCDF-001,no,yes.png,ok_new_name,ok,MT01-BKCH-EQPRE-006.png
+97,植物盆栽,植物盆栽,仿真盆栽- 普通绿植盆栽,CMO4-MEGT-CACAW-002,PT12-GYHG-X54E-001,no,no,no_image_found,可疑:首段=CMO4 期望以PT开头,CMO4-MEGT-CACAW-002.png
+135,植物盆栽,植物盆栽,仿真盆栽- 盆栽迎客松,CMO4-MEGT-CACAW-003,PT12-GYHG-X0BB-001,no,yes.png,ok_new_name,可疑:首段=CMO4 期望以PT开头,CMO4-MEGT-CACAW-003.png
+136,灯笼,灯笼,配套灯具-打锅射灯,CE11-BKCHSSASK-001,LN11-GYHG-X6C2-001,no,yes.png,ok_new_name,可疑:首段=CE11 期望以LN/LE开头,CE11-BKCHSSASK-001.png
+148,陶制烧制制品,陶制烧制制品,翘角-长三星脊翘角,CE01-GYHG-ABCEC-003,CE01-GYHG-XE47-001,no,yes.png,ok_new_name,ok,CE01-GYHG-ABCEC-003.png
+149,陶制烧制制品,陶制烧制制品,瓦片-普通瓦片,CE01-GYHG-ABDET-001,CE01-GYHG-X330-001,no,yes.png,ok_new_name,ok,CE01-GYHG-ABDET-001.png
+150,陶制烧制制品,陶制烧制制品,瓦片-筒瓦,CE01-GYHG-ABETH-002,CE01-GYHG-ABETH-001,yes.png,yes.png,old_and_new_both_exist,ok,CE01-GYHG-ABETH-002.png
+85,陶制烧制制品,陶制烧制制品,风头-三星脊风头,WD08-WDAM-ABCOL-002,CE01-GYHG-XF49-001,no,no,no_image_found,可疑:首段=WD08 期望以CE开头,WD08-WDAM-ABCOL-002.png
+126,定制金属制品,定制金属制品,定制异形黄铜件-U型黄铜条2m款,MT08-MEGT-MMCMP-002,MT04-GYHG-XD37-001,no,yes.png,ok_new_name,ok,MT08-MEGT-MMCMP-002.png
+127,定制金属制品,定制金属制品,铜片,MT08-MEGT-MMCMP-004,MT04-GYHG-XCF7-001,no,yes.png,ok_new_name,ok,MT08-MEGT-MMCMP-004.png
+128,定制金属制品,定制金属制品,铜角花-T,MT08-MEGT-MMCMP-005,MT04-GYHG-XDFF-001,no,yes.png,ok_new_name,ok,MT08-MEGT-MMCMP-005.png
+129,小型电器及设备,小型电器及设备,瀚红电池炉 国标插头,MT01-BKCH-EQPRE-001,EL09-GYHG-X920-001,no,yes.png,ok_new_name,ok,MT01-BKCH-EQPRE-001.png
+130,小型电器及设备,小型电器及设备,瀚红电池炉 欧标插头,MT01-BKCH-EQPRE-002,EL09-GYHG-X2E8-001,no,yes.png,ok_new_name,ok,MT01-BKCH-EQPRE-002.png
+131,小型电器及设备,小型电器及设备,瀚红电池炉 美标插头,MT01-BKCH-EQPRE-003,EL09-GYHG-XEE2-001,no,yes.png,ok_new_name,ok,MT01-BKCH-EQPRE-003.png
+132,小型电器及设备,小型电器及设备,内芯净化器,MT01-BKCH-EQPRE-004,EL09-GYHG-X476-001,no,yes.png,ok_new_name,ok,MT01-BKCH-EQPRE-004.png
+133,小型电器及设备,小型电器及设备,一体机活性炭净化器,MT01-BKCH-EQPRE-005,EL09-GYHG-XFC7-001,no,yes.png,ok_new_name,ok,MT01-BKCH-EQPRE-005.png
+137,灯笼,灯笼,灯笼- 单个门头灯,LE01-MEMG-SSASK-001,LN11-GYHG-X6D9-001,no,yes.png,ok_new_name,ok,LE01-MEMG-SSASK-001.png
+115,定制金属制品,定制金属制品,锅具- 平耳铜鸳鸯锅电磁炉版,MT08-MEGT-EQCKW-003,MT04-GYHG-X63E-001,no,yes.png,ok_new_name,ok,MT08-MEGT-EQCKW-003.png
+116,定制金属制品,定制金属制品,锅具- 平耳铜鸳鸯锅燃气版,MT08-MEGT-EQCKW-004,MT04-GYHG-XE3A-001,no,yes.png,ok_new_name,ok,MT08-MEGT-EQCKW-004.png
+117,定制金属制品,定制金属制品,锅具-平耳 铜三味锅-燃气版,MT08-MEGT-EQCKW-005,MT04-GYHG-HZSD-001,no,yes.png,ok_new_name,ok,MT08-MEGT-EQCKW-005.png
+118,定制金属制品,定制金属制品,锅具-平耳 铜三味锅-电磁炉版,MT08-MEGT-EQCKW-006,MT04-GYHG-HZSB-001,no,yes.png,ok_new_name,ok,MT08-MEGT-EQCKW-006.png
+119,定制金属制品,定制金属制品,锅具- 立耳 铜红锅-燃气版,MT08-MEGT-EQCKW-007,MT04-GYHG-HBSD-001,no,yes.png,ok_new_name,ok,MT08-MEGT-EQCKW-007.png
+120,定制金属制品,定制金属制品,锅具- 立耳铜红锅-电磁炉版,MT08-MEGT-EQCKW-008,MT04-GYHG-HBB-001,no,yes.png,ok_new_name,ok,MT08-MEGT-EQCKW-008.png
+121,定制金属制品,定制金属制品,锅具-立耳 铜鸳鸯锅-燃气版,MT08-MEGT-EQCKW-009,MT04-GYHG-HBSD-002,no,yes.png,ok_new_name,ok,MT08-MEGT-EQCKW-009.png
+122,定制金属制品,定制金属制品,锅具-立耳 铜鸳鸯锅-电磁炉版,MT08-MEGT-EQCKW-010,MT04-GYHG-HBSB-001,no,yes.png,ok_new_name,ok,MT08-MEGT-EQCKW-010.png
+123,定制金属制品,定制金属制品,锅具-立耳 铜三味锅-燃气版,MT08-MEGT-EQCKW-011,MT04-GYHG-HBSD-003,no,yes.png,ok_new_name,ok,MT08-MEGT-EQCKW-011.png
+124,定制金属制品,定制金属制品,锅具-立耳 铜三味锅-电磁炉版,MT08-MEGT-EQCKW-012,MT04-GYHG-HBSB-002,no,yes.png,ok_new_name,ok,MT08-MEGT-EQCKW-012.png
+147,陶制烧制制品,陶制烧制制品,青砖- 预制工字拼青砖墙板,CE01-GYHG-ABCEC-002,CE01-GYHG-ABMRR-001,no,yes.png,ok_new_name,ok,CE01-GYHG-ABCEC-002.png
+138,灯笼,灯笼,灯笼- 两联串门头灯,LE01-MEMG-SSASK-002,LN11-GYHG-XCC0-001,no,yes.png,ok_new_name,ok,LE01-MEMG-SSASK-002.png
+139,灯笼,灯笼,灯笼- 三联串门头灯,LE01-MEMG-SSASK-003,LN11-GYHG-X2D7-001,no,yes.png,ok_new_name,ok,LE01-MEMG-SSASK-003.png
+140,灯笼,灯笼,灯笼-吊角灯笼,LE01-MEMG-SSASK-004,LN11-GYHG-X980-001,no,yes.png,ok_new_name,ok,LE01-MEMG-SSASK-004.png
+141,灯笼,灯笼,灯笼- 过道灯-中款,LE01-MEMG-SSASK-005,LN11-GYHG-BRT-001,no,yes.png,ok_new_name,ok,LE01-MEMG-SSASK-005.png
+142,灯笼,灯笼,灯笼- 过道灯-长款,LE01-MEMG-SSASK-006,LN11-GYHG-BRZ-001,no,yes.png,ok_new_name,ok,LE01-MEMG-SSASK-006.png
+143,灯笼,灯笼,灯笼- 桌上红灯笼,LE01-RDDH-SSASK-001,LN11-GYHG-X88B-001,no,yes.png,ok_new_name,ok,LE01-RDDH-SSASK-001.png
+144,灯笼,灯笼,灯笼- 包间宫灯-短款,LE01-RDDH-SSASK-002,LN11-GYHG-BLV-001,no,yes.png,ok_new_name,ok,LE01-RDDH-SSASK-002.png
+145,灯笼,灯笼,灯笼- 包间宫灯-中款,LE01-RDDH-SSASK-003,LN11-GYHG-BLT-001,no,yes.png,ok_new_name,ok,LE01-RDDH-SSASK-003.png
+146,陶制烧制制品,陶制烧制制品,瓦当-普通瓦当,CE01-GYHG-ABCEC-001,CE01-GYHG-XDBB-001,no,yes.png,ok_new_name,ok,CE01-GYHG-ABCEC-001.png
+151,陶制烧制制品,陶制烧制制品,正脊-三星脊,CE01-GYHG-ABHRG-002,CE01-GYHG-ABHRG-001,no,yes.png,ok_new_name,ok,CE01-GYHG-ABHRG-002.png
+153,陶制烧制制品,陶制烧制制品,瓦当-筒瓦瓦当,CE01-GYHG-ABWBG-001,CE01-GYHG-ABETH-003,no,yes.png,ok_new_name,ok,CE01-GYHG-ABWBG-001.png
+154,陶制烧制制品,陶制烧制制品,滴水,ST08-WDAM-ABTIE-001,CE01-GYHG-ABTIE-001,no,yes.png,ok_new_name,可疑:首段=ST08 期望以CE开头,ST08-WDAM-ABTIE-001.png
+155,陶制烧制制品,陶制烧制制品,翘角-三星脊翘角,WD012-WDAM-ABPED-002,CE01-GYHG-X429-001,no,yes.png,ok_new_name,可疑:首段=WD012 期望以CE开头,WD012-WDAM-ABPED-002.png
+156,陶制烧制制品,陶制烧制制品,挡沟,WD08-WDWDABRAF-001,CE01-GYHG-ABRAF-001,no,yes.png,ok_new_name,可疑:首段=WD08 期望以CE开头,WD08-WDWDABRAF-001.png
+152,陶制烧制制品,陶制烧制制品,翘角-筒瓦翘角,CE01-GYHG-ABMRR-001,CE01-GYHG-ABETH-002,yes.png,yes.png,old_and_new_both_exist,ok,CE01-GYHG-ABMRR-001.png
